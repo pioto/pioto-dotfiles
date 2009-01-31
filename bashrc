@@ -142,6 +142,9 @@ case "$(uname -s)" in
     Linux)
         alias ls='ls -F --color=auto'
         ;;
+    *)
+        alias ls='ls -F'
+        ;;
 esac
 
 unset hostname
