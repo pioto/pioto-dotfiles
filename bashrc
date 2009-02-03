@@ -147,12 +147,12 @@ case "$(uname -s)" in
         ;;
 esac
 
-unset hostname
-
 alias fixssh='. ~/.ssh_env'
 
 export PALUDIS_OPTIONS="--continue-on-failure if-satisfied --resume-command-template ${HOME}/paludis-resume-XXXXXX"
 
 [[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
+
+unset hostname
 
 # vim: set ft=sh :
