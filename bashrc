@@ -35,11 +35,19 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
 export PATH
 
-[[ -d "${HOME}/lib/perl5" ]] && export PERL5LIB+=":${HOME}/lib/perl5:${HOME}/lib/perl5/site_perl"
+# the same sorta ickyness for perl lib and man paths
+if [[ -n "${PERL5LIB}" ]] ; then
+    PERL5LIB=":${PERL5LIB}"
+    PERL5LIB="${PERL5LIB/:${HOME}\/lib\/perl5:${HOME}\/lib\/perl5\/site_perl}"
+fi
+[[ -d "${HOME}/lib/perl5" ]] && PERL5LIB+=":${HOME}/lib/perl5:${HOME}/lib/perl5/site_perl"
+[[ -n "${PERL5LIB}" ]] && export PERL5LIB="${PERL5LIB/#:/}"
 [[ -x "$(type -P manpath)" ]] && MANPATH="$(manpath 2>/dev/null)"
-MANPATH=":${MANPATH}"
-MANPATH="${MANPATH/:${HOME}\/man/}"
-MANPATH="${MANPATH/#:/}"
+if [[ -n "${MANPATH}" ]] ; then
+    MANPATH=":${MANPATH}"
+    MANPATH="${MANPATH/:${HOME}\/man/}"
+    MANPATH="${MANPATH/#:/}"
+fi
 [[ -d "${HOME}/man" ]] && MANPATH="${HOME}/man:${MANPATH}"
 [[ -n "${MANPATH}" ]] && export MANPATH
 
