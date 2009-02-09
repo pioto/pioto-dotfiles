@@ -9,12 +9,20 @@ hostname="`hostname -f 2>/dev/null`"
 
 # Locality type stuff
 export TZ="America/New_York"
-LANG="en_US.UTF-8"
-if [[ "`locale -a`" == *en_US.utf8* ]] ; then
-    LANG="en_US.utf8"
+if [[ -x "$(type -P locale)" ]] ; then
+    case "`locale -a`" in
+        *en_US.UTF-8*)
+            LANG="en_US.UTF-8"
+            ;;
+        *en_US.utf8*)
+            LANG="en_US.utf8"
+            ;;
+        *en_US*)
+            LANG="en_US"
+            ;;
+    esac
+    [[ -n "${LANG}" ]] && export LANG SUPPORTED="${LANG}:en_US:en"
 fi
-export LANG
-export SUPPORTED="${LANG}:en_US:en"
 
 [[ -f "${HOME}/.inputrc" ]] && \
     export INPUTRC="${HOME}/.inputrc"
@@ -78,7 +86,7 @@ current_git_branch() {
     git --version 1>/dev/null 2>&1 || return
 
     local result=$(git symbolic-ref HEAD 2>/dev/null)
-    
+
     [[ -z ${result} ]] || echo " (${result##refs/heads/})"
 }
 
@@ -93,7 +101,7 @@ current_cvs_repo() {
         echo " (CVS: ${result%%/*}${tag})"
     fi
 }
- 
+
 current_svn_rev() {
     local result
 
@@ -102,7 +110,7 @@ current_svn_rev() {
         echo " (SVN: r${result})"
     fi
 }
- 
+
 current_scm_info() {
     local mygitinfo="$(__git_ps1 2>/dev/null || current_git_branch)" # from the git bash_completion script
     local mycvsinfo="$(current_cvs_repo)"
