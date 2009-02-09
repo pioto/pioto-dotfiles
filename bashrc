@@ -67,9 +67,9 @@ PAGER="less"
 export PAGER
 [[ -x "$(type -P vimmanpager)" ]] && export MANPAGER="$(type -P vimmanpager)"
 
-[[ -f /usr/local/etc/bash_completion ]] && \
+[[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /usr/local/etc/bash_completion
-[[ -f /etc/profile.d/bash-completion ]] && \
+[[ -f /etc/profile.d/bash-completion && -z "${BASH_COMPLETION}" ]] && \
     source /etc/profile.d/bash-completion
 
 # fun stuff from ferdy
