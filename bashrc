@@ -2,8 +2,6 @@
 
 [[ $- != *i* ]] && return
 
-[[ "${TERM}" == "rxvt-unicode" ]] && export TERM="rxvt"
-
 hostname="`hostname -f 2>/dev/null`"
 [[ -z "$hostname" ]] && hostname="`hostname`"
 
@@ -150,16 +148,18 @@ case ${TERM} in
                 ;;
 esac
 
-# some os-specific aliases
+# some os-specific aliases and such
 case "$(uname -s)" in
     FreeBSD)
         alias ls='ls -GF'
+        [[ "${TERM}" == "rxvt-unicode" ]] && export TERM="rxvt"
         ;;
     Linux)
         alias ls='ls -F --color=auto'
         ;;
     *)
         alias ls='ls -F'
+        [[ "${TERM}" == "rxvt-unicode" ]] && export TERM="rxvt"
         ;;
 esac
 
