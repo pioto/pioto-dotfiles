@@ -15,7 +15,7 @@ set tw=72
 " line numbering
 set nu
 " use 4 spaces per indent instead of tabs
-set et ts=4 sw=4
+set et sts=4 sw=4
 
 " some stuff borrowed from ciaranm
 "-----------------------------------------------------------------------
