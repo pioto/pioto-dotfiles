@@ -126,6 +126,8 @@ if has("eval") && has("autocmd")
         autocmd BufReadPost **.git/COMMIT_EDITMSG exe "normal gg"
         autocmd BufNewFile,BufRead /etc/dbus-1/**/*.conf setl ft=xml
         autocmd BufNewFile *.exheres-* call MakeGenericCopyrightHeader()
+        autocmd FileType perl setl makeprg=$VIMRUNTIME/tools/efm_perl.pl\ -c\ %\ $*
+        autocmd FileType perl setl errorformat=%f:%l:%m
     augroup END
 endif
 
