@@ -121,6 +121,18 @@ if has("eval") && has("autocmd")
         put ='# Distributed under the terms of the GNU General Public License v2'
         $
     endfun
+    fun! <SID>UpdateCopyrightHeaders()
+        let l:a = 0
+        for l:x in getline(1, 10)
+            let l:a = l:a + 1
+            if -1 != match(l:x, 'Copyright \((c) \)\?[- 0-9,]*200[45678] Mike Kelly')
+                if input("Update copyright header? (y/N) ") == "y"
+                    call setline(l:a, substitute(l:x, '\(200[45678]\) Mike',
+                                \ '\1, 2009 Mike', ""))
+                endif
+            endif
+        endfor
+    endfun
     augroup pioto
         autocmd!
 
@@ -129,6 +141,7 @@ if has("eval") && has("autocmd")
         autocmd BufNewFile *.exheres-* call MakeGenericCopyrightHeader()
         autocmd FileType perl setl makeprg=$VIMRUNTIME/tools/efm_perl.pl\ -c\ %\ $*
         autocmd FileType perl setl errorformat=%f:%l:%m
+        autocmd BufWritePre * call <SID>UpdateCopyrightHeaders()
     augroup END
 endif
 
