@@ -8,7 +8,7 @@ install:
 	install -p -m 0644 vimrc $(HOME)/.vimrc
 
 diff:
-	diff $(DIFFOPTS) $(HOME)/.bashrc bashrc
-	diff $(DIFFOPTS) $(HOME)/.bash_profile bash_profile
-	diff $(DIFFOPTS) $(HOME)/.vimrc vimrc 
+	diff $(DIFFOPTS) $(HOME)/.bashrc bashrc || true
+	diff $(DIFFOPTS) $(HOME)/.bash_profile bash_profile || true
+	diff $(DIFFOPTS) $(HOME)/.vimrc vimrc || true
 
