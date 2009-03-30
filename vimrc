@@ -24,11 +24,11 @@ set et sts=4 sw=4
 "-----------------------------------------------------------------------
 
 " Extra terminal things
-if (&term =~ "xterm|rxvt")
+if (&term =~ "xterm\\|rxvt")
     set termencoding=utf-8
 endif
 
-if &term =~ "xterm|rxvt"
+if &term =~ "xterm\\|rxvt"
     " use xterm titles
     if has('title')
         set title
@@ -39,6 +39,10 @@ if &term =~ "xterm|rxvt"
         let &t_SI = "\<Esc>]12;lightgoldenrod\x7"
         let &t_EI = "\<Esc>]12;grey80\x7"
     endif
+endif
+
+if &term =~ "rxvt\\|screen"
+    set t_Co=256
 endif
 
 "-----------------------------------------------------------------------
