@@ -19,10 +19,11 @@ fi
 #case "${HOSTNAME}" in
 #esac
 
-for v in ${!SSH*} DISPLAY ; do
+for v in ${!SSH*} ${!DISPLAY*} ; do
     echo "export $v=\"${!v}\""
 done > "${HOME}/.ssh_env"
 
 [[ -f "${HOME}/.bash_profile.local" ]] && source "${HOME}/.bash_profile.local"
+:
 
 # vim: set ft=sh :
