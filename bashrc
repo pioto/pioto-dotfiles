@@ -68,10 +68,7 @@ export EDITOR="$(type -P vim)"
 [[ -z "${BROWSER}" && -x "$(type -P links)" ]] \
     && export BROWSER="$(type -P links)"
 
-PAGER="less"
-[[ -x "$(type -P vimpager)" ]] && PAGER="$(type -P vimpager)"
-export PAGER
-[[ -x "$(type -P vimmanpager)" ]] && export MANPAGER="$(type -P vimmanpager)"
+export PAGER="less"
 
 [[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /usr/local/etc/bash_completion
