@@ -11,6 +11,17 @@ let g:Perl_MapLeader = ','
 
 let g:full_name = 'Mike Kelly'
 
+"if executable("curl")
+"    let g:netrw_http_cmd = "curl -o"
+"elseif executable("wget")
+if executable("wget")
+    let g:netrw_http_cmd = "wget -q -O"
+elseif executable("fetch")
+    let g:netrw_http_cmd = "fetch -o"
+else
+    let g:netrw_http_cmd = ""
+endif
+
 " wrap at column 72
 set tw=72
 " line numbering
