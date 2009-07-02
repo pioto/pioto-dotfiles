@@ -53,7 +53,7 @@ if &term =~ "xterm\\|rxvt"
 endif
 
 if &term =~ "rxvt\\|screen"
-    set t_Co=256
+    set t_Co=88
 endif
 
 "-----------------------------------------------------------------------
