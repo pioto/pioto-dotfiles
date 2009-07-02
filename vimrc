@@ -157,8 +157,7 @@ if has("eval") && has("autocmd")
         autocmd FileType perl setl makeprg=$VIMRUNTIME/tools/efm_perl.pl\ -c\ %\ $*
         autocmd FileType perl setl errorformat=%f:%l:%m
         autocmd BufWritePre * call <SID>UpdateCopyrightHeaders()
-        autocmd BufRead *-*-sup.* setl ft=mail
-        autocmd BufRead *-*-sup.* +/^\s*$
+        autocmd BufNewFile,BufRead /tmp/*sup* setl ft=mail
     augroup END
 endif
 
