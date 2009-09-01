@@ -1,10 +1,5 @@
 # Mike Kelly's .bashrc
 
-[[ $- != *i* ]] && return
-
-hostname="`hostname -f 2>/dev/null`"
-[[ -z "$hostname" ]] && hostname="`hostname`"
-
 # Locality type stuff
 export TZ="America/New_York"
 if [[ -x "$(type -P locale)" ]] ; then
@@ -21,13 +16,6 @@ if [[ -x "$(type -P locale)" ]] ; then
     esac
     [[ -n "${LANG}" ]] && export LANG SUPPORTED="${LANG}:en_US:en"
 fi
-
-[[ -f "${HOME}/.inputrc" ]] && \
-    export INPUTRC="${HOME}/.inputrc"
-
-# generous history size
-export HISTFILESIZE=5000 HISTSIZE=5000
-shopt -s histappend
 
 # properly reorder path... this is icky
 PATH=":${PATH}"
@@ -69,6 +57,22 @@ export EDITOR="$(type -P vim)"
     && export BROWSER="$(type -P links)"
 
 export PAGER="less"
+
+[[ -x "$(type -P gnome-ssh-askpass)" ]] \
+    && export SSH_ASKPASS="$(type -P gnome-ssh-askpass)"
+
+# everything else is just for interactive shells.
+[[ $- != *i* ]] && return
+
+hostname="`hostname -f 2>/dev/null`"
+[[ -z "$hostname" ]] && hostname="`hostname`"
+
+[[ -f "${HOME}/.inputrc" ]] && \
+    export INPUTRC="${HOME}/.inputrc"
+
+# generous history size
+export HISTFILESIZE=5000 HISTSIZE=5000
+shopt -s histappend
 
 [[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /usr/local/etc/bash_completion
