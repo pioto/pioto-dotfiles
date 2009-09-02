@@ -34,7 +34,7 @@ if [[ -n "${PERL5LIB}" ]] ; then
     PERL5LIB=":${PERL5LIB}"
     PERL5LIB="${PERL5LIB/:${HOME}\/lib\/perl5:${HOME}\/lib\/perl5\/site_perl}"
 fi
-[[ -d "${HOME}/lib/perl5" ]] && PERL5LIB+=":${HOME}/lib/perl5:${HOME}/lib/perl5/site_perl"
+[[ -d "${HOME}/lib/perl5" ]] && PERL5LIB="${PERL5LIB}:${HOME}/lib/perl5:${HOME}/lib/perl5/site_perl"
 [[ -n "${PERL5LIB}" ]] && export PERL5LIB="${PERL5LIB/#:/}"
 [[ -x "$(type -P manpath)" ]] && MANPATH="$(manpath 2>/dev/null)"
 if [[ -n "${MANPATH}" ]] ; then
