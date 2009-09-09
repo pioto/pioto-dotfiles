@@ -113,10 +113,12 @@ current_svn_rev() {
 _git_branch_status() {
     local result="${1}"
     [[ -n "${result}" ]] || return
+    
+    local desc="$(git describe 2>/dev/null)"
+    [[ -n "${desc}" ]] && result="${result%)}@${desc})"
+
     local status="$(git branch -v 2>/dev/null |perl -ne '/^\*/ or next; /(\[(?:ahead|behind)[^\]]+\])/; print $1')"
-    if [[ -n "${status}" ]] ; then
-        result="${result%)} ${status})"
-    fi
+    [[ -n "${status}" ]] && result="${result%)} ${status})"
 
     echo "${result}"
 }
