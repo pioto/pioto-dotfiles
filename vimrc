@@ -7,7 +7,10 @@ let perl_want_scope_in_variables = 1
 let perl_extended_vars = 1
 let perl_fold = 1
 "let perl_fold_blocks = 1
-let g:Perl_MapLeader = ','
+
+let perl6_embedded_pir = 1
+let perl6_extended_all = 1
+
 
 let g:full_name = 'Mike Kelly'
 
