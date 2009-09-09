@@ -110,8 +110,20 @@ current_svn_rev() {
     fi
 }
 
+_git_branch_status() {
+    local result="${1}"
+    [[ -n "${result}" ]] || return
+    local status="$(git branch -v 2>/dev/null |perl -ne '/^\*/ or next; /(\[(?:ahead|behind)[^\]]+\])/; print $1')"
+    if [[ -n "${status}" ]] ; then
+        result="${result%)} ${status})"
+    fi
+
+    echo "${result}"
+}
+
 current_scm_info() {
     local mygitinfo="$(__git_ps1 2>/dev/null || current_git_branch)" # from the git bash_completion script
+    mygitinfo="$(_git_branch_status "${mygitinfo}")"
     local mycvsinfo="$(current_cvs_repo)"
     local mysvninfo="$(current_svn_rev)"
 
