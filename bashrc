@@ -180,7 +180,9 @@ esac
 
 alias fixssh='. ~/.ssh_env'
 
-export PALUDIS_OPTIONS="--continue-on-failure if-satisfied --resume-command-template ${HOME}/paludis-resume-XXXXXX"
+export CAVE_RESOLVE_OPTIONS="--continue-on-failure if-satisfied"
+export PALUDIS_OPTIONS="${CAVE_RESOLVE_OPTIONS} --resume-command-template ${HOME}/paludis-resume-XXXXXX"
+export RECONCILIO_OPTIONS="${PALUDIS_OPTIONS}"
 
 [[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
 
