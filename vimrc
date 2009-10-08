@@ -55,10 +55,10 @@ if &term =~ "xterm\\|rxvt"
     endif
 endif
 
-if &term =~ "rxvt"
-    set t_Co=88
-elseif &term =~ "screen"
+if &term =~ "screen"
     set t_Co=256
+elseif &term =~ "rxvt"
+    set t_Co=88
 endif
 
 "-----------------------------------------------------------------------
