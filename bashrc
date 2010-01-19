@@ -58,6 +58,8 @@ export EDITOR="$(type -P vim)"
 
 export PAGER="less"
 
+export GPG_TTY="$(tty)"
+
 [[ -x "$(type -P gnome-ssh-askpass)" ]] \
     && export SSH_ASKPASS="$(type -P gnome-ssh-askpass)"
 
