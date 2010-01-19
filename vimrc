@@ -27,8 +27,8 @@ endif
 
 " wrap at column 72
 set tw=72
-" line numbering
-set nu
+" no line numbering
+set nonu
 " use 4 spaces per indent instead of tabs
 set et sts=4 sw=4
 
