@@ -23,9 +23,11 @@ PATH="${PATH/:\/usr\/local\/bin/}"
 PATH="${PATH/:\/usr\/local\/sbin/}"
 PATH="${PATH/:\/usr\/sbin/}"
 PATH="${PATH/:\/sbin/}"
+PATH="${PATH/:\/usr\/local\/scripts}"
 PATH="${PATH/:${HOME}\/bin/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
+[[ -d "/usr/local/scripts" ]] && PATH="/usr/local/scripts:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
 export PATH
 
