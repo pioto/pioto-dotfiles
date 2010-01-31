@@ -173,7 +173,7 @@ case "$(uname -s)" in
         alias ls='ls -GF'
         [[ "${TERM}" == "rxvt-unicode" ]] && export TERM="rxvt"
         ;;
-    Linux)
+    Linux|CYGWIN*)
         alias ls='ls -F --color=auto'
         ;;
     *)
