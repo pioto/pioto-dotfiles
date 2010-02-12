@@ -42,9 +42,11 @@ fi
 if [[ -n "${MANPATH}" ]] ; then
     MANPATH=":${MANPATH}"
     MANPATH="${MANPATH/:${HOME}\/man/}"
+    MANPATH="${MANPATH/:${HOME}\/share\/man/}"
     MANPATH="${MANPATH/#:/}"
 fi
 [[ -d "${HOME}/man" ]] && MANPATH="${HOME}/man:${MANPATH}"
+[[ -d "${HOME}/share/man" ]] && MANPATH="${HOME}/share/man:${MANPATH}"
 [[ -n "${MANPATH}" ]] && export MANPATH
 
 # set up preferred apps
