@@ -163,7 +163,7 @@ if has("eval") && has("autocmd")
         autocmd FileType perl setl errorformat=%f:%l:%m
         autocmd BufWritePre * call <SID>UpdateCopyrightHeaders()
         autocmd BufNewFile,BufRead /tmp/*sup* setl ft=mail
-        autocmd BufNewFile,BufRead /tmp/*sup* +/^\s*$
+        autocmd BufNewFile,BufRead mutt-*-\w\+,/tmp/*sup* +/^\s*$
     augroup END
 endif
 
