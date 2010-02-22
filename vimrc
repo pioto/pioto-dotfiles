@@ -148,7 +148,7 @@ if has("eval") && has("autocmd")
             if -1 != match(l:x, 'Copyright \((c) \)\?[- 0-9,]*200[456789] Mike Kelly')
                 if input("Update copyright header? (y/N) ") == "y"
                     call setline(l:a, substitute(l:x, '\(200[456789]\) Mike',
-                                \ '\1, 2009 Mike', ""))
+                                \ '\1, 2010 Mike', ""))
                 endif
             endif
         endfor
