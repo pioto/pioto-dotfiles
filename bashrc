@@ -51,6 +51,8 @@ fi
 
 # set up preferred apps
 export EDITOR="$(type -P vim)"
+[[ -z "${BROWSER}" && -x "$(type -P chrome)" ]] \
+    && export BROWSER="$(type -P chrome)"
 [[ -z "${BROWSER}" && -x "$(type -P firefox3)" ]] \
     && export BROWSER="$(type -P firefox3)"
 [[ -z "${BROWSER}" && -x "$(type -P firefox)" ]] \
