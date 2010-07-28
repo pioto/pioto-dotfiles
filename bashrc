@@ -194,7 +194,7 @@ export CAVE_RESOLVE_OPTIONS="--continue-on-failure if-satisfied --resume-file ${
 export PALUDIS_OPTIONS="--continue-on-failure if-satisfied --resume-command-template ${HOME}/paludis-resume-XXXXXX"
 export RECONCILIO_OPTIONS="${PALUDIS_OPTIONS}"
 
-alias cr="cave resume --resume-file ${HOME}/cave-resume"
+alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
 
 [[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
 
