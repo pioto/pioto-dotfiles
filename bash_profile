@@ -2,8 +2,8 @@
 
 if [[ -x "$(type -P keychain)" ]] ; then
     ssh="$(cd ${HOME}/.ssh 2>/dev/null && command ls id_*.pub 2>/dev/null|sed s/.pub//)"
-    [[ -d "${HOME}/.gnupg" && -x "$(type -P gpg)" ]] \
-    	&& gpg="$(gpg --list-secret-keys |sed -n '/^sec/s/.*\d*[DR]\/\([0-9A-F]*\).*/\1/p')"
+    #[[ -d "${HOME}/.gnupg" && -x "$(type -P gpg)" ]] \
+    #	&& gpg="$(gpg --list-secret-keys |sed -n '/^sec/s/.*\d*[DR]\/\([0-9A-F]*\).*/\1/p')"
     if [[ -n "${ssh}${gpg}" ]] ; then
         keychain ${ssh} ${gpg}
         if [[ -f "${HOME}/.keychain/${HOSTNAME}-sh" ]] ; then
