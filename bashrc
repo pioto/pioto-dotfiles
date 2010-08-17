@@ -191,7 +191,8 @@ esac
 alias fixssh='. ~/.ssh_env'
 
 export CAVE_RESOLVE_OPTIONS="--continue-on-failure if-satisfied --resume-file ${HOME}/cave-resume"
-export PALUDIS_OPTIONS="--continue-on-failure if-satisfied --resume-command-template ${HOME}/paludis-resume-XXXXXX"
+export CAVE_RESUME_OPTIONS="${CAVE_RESOLVE_OPTIONS}"
+export PALUDIS_OPTIONS="--continue-on-failure if-satisfied --resume-command-template ${HOME}/paludis-resume"
 export RECONCILIO_OPTIONS="${PALUDIS_OPTIONS}"
 
 alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
