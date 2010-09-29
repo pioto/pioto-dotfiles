@@ -165,6 +165,7 @@ if has("eval") && has("autocmd")
         autocmd BufNewFile,BufRead /tmp/*sup*,/tmp/ner-* setl ft=mail
         autocmd BufNewFile,BufRead mutt-*-\w\+,/tmp/*sup*,/tmp/ner-* +/^\s*$
         autocmd FileType remind autocmd BufWritePost <buffer> :!pkill -HUP -f remind-notify
+        autocmd BufNewFile,BufRead /{etc,lib*}/systemd/**/*.{conf,target,service} setl ft=desktop
     augroup END
 endif
 
