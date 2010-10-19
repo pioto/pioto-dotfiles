@@ -25,11 +25,17 @@ PATH="${PATH/:\/usr\/sbin/}"
 PATH="${PATH/:\/sbin/}"
 PATH="${PATH/:\/usr\/local\/scripts}"
 PATH="${PATH/:${HOME}\/bin/}"
+texlive_year="2010"
+texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
+PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "/usr/local/scripts" ]] && PATH="/usr/local/scripts:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
+[[ -d "/usr/local/texlive/${texlive_year}/bin/${texlive_arch}" ]] &&
+    PATH="/usr/local/texlive/${texlive_year}/bin/${texlive_arch}:${PATH}"
 export PATH
+unset texlive_year texlive_arch
 
 # the same sorta ickyness for perl lib and man paths
 if [[ -n "${PERL5LIB}" ]] ; then
