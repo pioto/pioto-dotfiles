@@ -179,6 +179,8 @@ case ${TERM} in
                 ;;
 esac
 
+[[ "${TERM}" == "rxvt-unicode-256color" ]] && export TERM="rxvt-unicode"
+
 # some os-specific aliases and such
 case "$(uname -s)" in
     FreeBSD)
