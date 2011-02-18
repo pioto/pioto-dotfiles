@@ -90,9 +90,7 @@ if has("syntax")
     syntax on
 endif
 
-" Do clever indent things. Don't make a # force column zero.
-set autoindent
-set smartindent
+" Don't make a # force column zero.
 inoremap # X<BS>#
 
 " Enable folds
