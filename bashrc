@@ -92,6 +92,8 @@ shopt -s histappend
 
 [[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /usr/local/etc/bash_completion
+[[ -f /etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
+    . /etc/bash_completion
 [[ -f /etc/profile.d/bash-completion && -z "${BASH_COMPLETION}" ]] && \
     source /etc/profile.d/bash-completion
 
