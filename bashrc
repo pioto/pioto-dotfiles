@@ -189,6 +189,9 @@ case "$(uname -s)" in
         ;;
     Linux|CYGWIN*)
         alias ls='ls -F --color=auto'
+        # debian/ubuntu are annoying...
+        [[ -x "$(type -P ack-grep)" && ! -x "$(type -P ack)" ]] \
+            && alias ack='ack-grep'
         ;;
     *)
         alias ls='ls -F'
