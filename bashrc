@@ -214,6 +214,8 @@ export RECONCILIO_OPTIONS="${PALUDIS_OPTIONS}"
 
 alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
 
+[[ -x "$(type -P hub)" ]] && eval "$(hub alias -s)"
+
 [[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
 
 unset hostname
