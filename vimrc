@@ -145,18 +145,20 @@ if has("eval") && has("autocmd")
         put ='# Distributed under the terms of the GNU General Public License v2'
         $
     endfun
-    fun! <SID>UpdateCopyrightHeaders()
-        let l:a = 0
-        for l:x in getline(1, 10)
-            let l:a = l:a + 1
-            if -1 != match(l:x, 'Copyright \((c) \)\?[- 0-9,]*20\(0[456789]\|10\) Mike Kelly')
-                if input("Update copyright header? (y/N) ") == "y"
-                    call setline(l:a, substitute(l:x, '\(20\(0[456789]\|10\)\) Mike',
-                                \ '\1, 2011 Mike', ""))
+    if exists(":for")
+        fun! <SID>UpdateCopyrightHeaders()
+            let l:a = 0
+            for l:x in getline(1, 10)
+                let l:a = l:a + 1
+                if -1 != match(l:x, 'Copyright \((c) \)\?[- 0-9,]*20\(0[456789]\|10\) Mike Kelly')
+                    if input("Update copyright header? (y/N) ") == "y"
+                        call setline(l:a, substitute(l:x, '\(20\(0[456789]\|10\)\) Mike',
+                                    \ '\1, 2011 Mike', ""))
+                    endif
                 endif
-            endif
-        endfor
-    endfun
+            endfor
+        endfun
+    endif
     augroup pioto
         autocmd!
 
@@ -165,7 +167,9 @@ if has("eval") && has("autocmd")
         autocmd BufNewFile *.exheres-* call MakeGenericCopyrightHeader()
         autocmd FileType perl setl makeprg=$VIMRUNTIME/tools/efm_perl.pl\ -c\ %\ $*
         autocmd FileType perl setl errorformat=%f:%l:%m
-        autocmd BufWritePre * call <SID>UpdateCopyrightHeaders()
+        if exists("*<SID>UpdateCopyrightHeaders")
+            autocmd BufWritePre * call <SID>UpdateCopyrightHeaders()
+        endif
         autocmd BufNewFile,BufRead /tmp/*sup*,/tmp/ner-* setl ft=mail
         autocmd BufNewFile,BufRead mutt-*-\w\+,/tmp/*sup*,/tmp/ner-* +/^\s*$
         autocmd FileType remind autocmd BufWritePost <buffer> :!pkill -HUP -f remind-notify
