@@ -150,10 +150,10 @@ if has("eval") && has("autocmd")
             let l:a = 0
             for l:x in getline(1, 10)
                 let l:a = l:a + 1
-                if -1 != match(l:x, 'Copyright \((c) \)\?[- 0-9,]*20\(0[456789]\|10\) Mike Kelly')
+                if -1 != match(l:x, 'Copyright \((c) \)\?[- 0-9,]*20\(0[456789]\|1[01]\) Mike Kelly')
                     if input("Update copyright header? (y/N) ") == "y"
-                        call setline(l:a, substitute(l:x, '\(20\(0[456789]\|10\)\) Mike',
-                                    \ '\1, 2011 Mike', ""))
+                        call setline(l:a, substitute(l:x, '\(20\(0[456789]\|1[01]\)\) Mike',
+                                    \ '\1, 2012 Mike', ""))
                     endif
                 endif
             endfor
