@@ -2,6 +2,12 @@ set ruler
 set title
 set background=dark
 
+" Vundle config, see https://github.com/gmarik/vundle#readme
+if isdirectory(expand("~/.vim/bundle/vundle/"))
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+endif
+
 let perl_include_pod = 1
 let perl_want_scope_in_variables = 1
 let perl_extended_vars = 1
