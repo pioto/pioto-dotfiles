@@ -3,7 +3,7 @@ set title
 set background=dark
 
 " Vundle config, see https://github.com/gmarik/vundle#readme
-if isdirectory(expand("~/.vim/bundle/vundle/"))
+if isdirectory(expand("~/.vim/bundle/vundle/")) && v:version > 700
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 endif
