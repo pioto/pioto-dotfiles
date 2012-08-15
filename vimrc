@@ -17,6 +17,12 @@ let perl_fold = 1
 let perl6_embedded_pir = 1
 let perl6_extended_all = 1
 
+" dash is a posix sh
+if executable("/bin/sh")
+    if resolve("/bin/sh") =~ 'dash$'
+        let g:is_posix=1
+    endif
+endif
 
 let g:full_name = 'Mike Kelly'
 
