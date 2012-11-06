@@ -220,4 +220,6 @@ alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
 
 unset hostname
 
+[[ -f "${HOME}/perl5/perlbrew/etc/bashrc" ]] && source "${HOME}/perl5/perlbrew/etc/bashrc"
+
 # vim: set ft=sh :
