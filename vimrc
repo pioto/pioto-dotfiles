@@ -208,6 +208,15 @@ map <Leader>sc :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> 
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+" Keep all swap files in one place; makes recovering later easier, and
+" avoids Dropbox being dumb, etc...
+if !isdirectory(expand("~/.vim_swap/"))
+    if exists("*mkdir")
+        call mkdir(expand("~/.vim_swap/"), "", 0700)
+    end
+endif
+set directory^=~/.vim_swap//
+
 " For some things that're local to certain systems.
 if filereadable( expand("~") . "/.vimrc.local" )
     source ~/.vimrc.local
