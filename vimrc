@@ -6,6 +6,18 @@ set background=dark
 if isdirectory(expand("~/.vim/bundle/vundle/")) && v:version > 700
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
+
+    " let Vundle manage Vundle
+    " required!
+    Bundle "gmarik/vundle"
+
+    " stuff from vim.org i care about:
+    Bundle "vcscommand.vim"
+
+    " other useful stuff
+    Bundle "ciaranm/securemodelines"
+
+    Bundle "pangloss/vim-javascript"
 endif
 
 let perl_include_pod = 1
