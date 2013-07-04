@@ -91,7 +91,7 @@ hostname="`hostname -f 2>/dev/null`"
     export INPUTRC="${HOME}/.inputrc"
 
 # generous history size
-export HISTFILESIZE=5000 HISTSIZE=5000
+export HISTFILESIZE=5000 HISTSIZE=5000 HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 shopt -s histappend
 
 [[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
