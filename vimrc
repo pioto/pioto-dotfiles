@@ -23,6 +23,7 @@ if isdirectory(expand("~/.vim/bundle/Vundle.vim/")) && v:version > 700
     Plugin 'pangloss/vim-javascript'
     
     Plugin 'plasticboy/vim-markdown'
+    Plugin 'PProvost/vim-markdown-jekyll'
 
     " All of your Plugins must be added before the following line
     call vundle#end()         " required
