@@ -28,16 +28,17 @@ PATH="${PATH/:${HOME}\/bin/}"
 texlive_year="2012"
 texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
-ruby_vers="1.8"
-PATH="${PATH/:${HOME}\/.gem\/ruby\/${ruby_vers}\/bin/}"
+#ruby_vers="1.9.1"
+#PATH="${PATH/:${HOME}\/.gem\/ruby\/${ruby_vers}\/bin/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "/usr/local/scripts" ]] && PATH="/usr/local/scripts:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
 [[ -d "/usr/local/texlive/${texlive_year}/bin/${texlive_arch}" ]] &&
     PATH="/usr/local/texlive/${texlive_year}/bin/${texlive_arch}:${PATH}"
-[[ -d "${HOME}/.gem/ruby/${ruby_vers}/bin" ]] &&
-    PATH="${HOME}/.gem/ruby/${ruby_vers}/bin:${PATH}"
+#[[ -d "${HOME}/.gem/ruby/${ruby_vers}/bin" ]] &&
+#    PATH="${HOME}/.gem/ruby/${ruby_vers}/bin:${PATH}"
+[[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
 export PATH
 unset texlive_year texlive_arch
 

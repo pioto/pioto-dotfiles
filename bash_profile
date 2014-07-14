@@ -24,6 +24,10 @@ for v in ${!SSH*} ${!DISPLAY*} ; do
 done > "${HOME}/.ssh_env"
 
 [[ -f "${HOME}/.bash_profile.local" ]] && source "${HOME}/.bash_profile.local"
+
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 :
 
 # vim: set ft=sh :
