@@ -20,33 +20,35 @@ if isdirectory(expand("~/.vim/bundle/vundle/")) && v:version > 700
     Bundle "pangloss/vim-javascript"
 endif
 
-let perl_include_pod = 1
-let perl_want_scope_in_variables = 1
-let perl_extended_vars = 1
-let perl_fold = 1
-"let perl_fold_blocks = 1
+if has("eval")
+    let perl_include_pod = 1
+    let perl_want_scope_in_variables = 1
+    let perl_extended_vars = 1
+    let perl_fold = 1
+    "let perl_fold_blocks = 1
 
-let perl6_embedded_pir = 1
-let perl6_extended_all = 1
+    let perl6_embedded_pir = 1
+    let perl6_extended_all = 1
 
-" dash is a posix sh
-if executable("/bin/sh")
-    if resolve("/bin/sh") =~ 'dash$'
-        let g:is_posix=1
+    " dash is a posix sh
+    if executable("/bin/sh")
+        if resolve("/bin/sh") =~ 'dash$'
+            let g:is_posix=1
+        endif
     endif
-endif
 
-let g:full_name = 'Mike Kelly'
+    let g:full_name = 'Mike Kelly'
 
-"if executable("curl")
-"    let g:netrw_http_cmd = "curl -o"
-"elseif executable("wget")
-if executable("wget")
-    let g:netrw_http_cmd = "wget -q -O"
-elseif executable("fetch")
-    let g:netrw_http_cmd = "fetch -o"
-else
-    let g:netrw_http_cmd = ""
+    "if executable("curl")
+    "    let g:netrw_http_cmd = "curl -o"
+    "elseif executable("wget")
+    if executable("wget")
+        let g:netrw_http_cmd = "wget -q -O"
+    elseif executable("fetch")
+        let g:netrw_http_cmd = "fetch -o"
+    else
+        let g:netrw_http_cmd = ""
+    endif
 endif
 
 " wrap at column 72
@@ -132,8 +134,10 @@ endif
 
 " Disable modelines, use securemodelines.vim instead
 set nomodeline
-let g:secure_modelines_verbose = 0
-let g:secure_modelines_modelines = 15
+if has("eval")
+    let g:secure_modelines_verbose = 0
+    let g:secure_modelines_modelines = 15
+endif
 
 "-----------------------------------------------------------------------
 " completion
