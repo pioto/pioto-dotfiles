@@ -2,22 +2,29 @@ set ruler
 set title
 set background=dark
 
-" Vundle config, see https://github.com/gmarik/vundle#readme
-if isdirectory(expand("~/.vim/bundle/vundle/")) && v:version > 700
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
+" Vundle config, see https://github.com/VundleVim/Vundle.vim#quick-start
+if isdirectory(expand("~/.vim/bundle/Vundle.vim/")) && v:version > 700
+    set nocompatible " be iMproved, required
+    filetype off     " required
 
-    " let Vundle manage Vundle
-    " required!
-    Bundle "gmarik/vundle"
+    " set the runtime path to include Vundle and initialize
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+
+    " let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
 
     " stuff from vim.org i care about:
-    Bundle "vcscommand.vim"
+    Plugin 'vcscommand.vim'
 
     " other useful stuff
-    Bundle "ciaranm/securemodelines"
+    Plugin 'ciaranm/securemodelines'
 
-    Bundle "pangloss/vim-javascript"
+    Plugin 'pangloss/vim-javascript'
+
+    " All of your Plugins must be added before the following line
+    call vundle#end()         " required
+    filetype plugin indent on " required
 endif
 
 if has("eval")
