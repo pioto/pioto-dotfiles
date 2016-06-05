@@ -30,6 +30,7 @@ texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
 #ruby_vers="1.9.1"
 #PATH="${PATH/:${HOME}\/.gem\/ruby\/${ruby_vers}\/bin/}"
+PATH="${PATH/:${HOME}\/.node\/bin/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "/usr/local/scripts" ]] && PATH="/usr/local/scripts:${PATH}"
@@ -39,6 +40,7 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 #[[ -d "${HOME}/.gem/ruby/${ruby_vers}/bin" ]] &&
 #    PATH="${HOME}/.gem/ruby/${ruby_vers}/bin:${PATH}"
 [[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
+[[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
 export PATH
 unset texlive_year texlive_arch
 
@@ -54,11 +56,15 @@ if [[ -n "${MANPATH}" ]] ; then
     MANPATH=":${MANPATH}"
     MANPATH="${MANPATH/:${HOME}\/man/}"
     MANPATH="${MANPATH/:${HOME}\/share\/man/}"
+    MANPATH="${MANPATH/:${HOME}\/.node\/share\/man/}"
     MANPATH="${MANPATH/#:/}"
 fi
 [[ -d "${HOME}/man" ]] && MANPATH="${HOME}/man:${MANPATH}"
 [[ -d "${HOME}/share/man" ]] && MANPATH="${HOME}/share/man:${MANPATH}"
+[[ -d "${HOME}/.node/share/man" ]] && MANPATH="${HOME}/.node/share/man:${MANPATH}"
 [[ -n "${MANPATH}" ]] && export MANPATH
+
+[[ -d "${HOME}/.node/lib/node_modules" ]] && export NODE_PATH="${HOME}/.node/lib/node_modules"
 
 # set up preferred apps
 export EDITOR="$(type -P vim)"
