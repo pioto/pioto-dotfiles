@@ -16,6 +16,7 @@ if isdirectory(expand("~/.vim/bundle/Vundle.vim/")) && v:version > 700
 
     " stuff from vim.org i care about:
     Plugin 'vcscommand.vim'
+    Plugin 'irssilog.vim'
 
     " other useful stuff
     Plugin 'ciaranm/securemodelines'
