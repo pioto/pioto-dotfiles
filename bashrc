@@ -103,6 +103,8 @@ shopt -s histappend
 
 [[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /usr/local/etc/bash_completion
+[[ -f  /usr/local/share/bash-completion/bash_completion.sh && -z "${BASH_COMPLETION}" ]] && \
+    .  /usr/local/share/bash-completion/bash_completion.sh
 [[ -f /etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /etc/bash_completion
 [[ -f /etc/profile.d/bash-completion && -z "${BASH_COMPLETION}" ]] && \
