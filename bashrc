@@ -31,6 +31,7 @@ PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
 #ruby_vers="1.9.1"
 #PATH="${PATH/:${HOME}\/.gem\/ruby\/${ruby_vers}\/bin/}"
 PATH="${PATH/:${HOME}\/.node\/bin/}"
+PATH="${PATH/:${HOME}\/Library\/Python\/3.7\/bin/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "/usr/local/scripts" ]] && PATH="/usr/local/scripts:${PATH}"
@@ -41,6 +42,7 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 #    PATH="${HOME}/.gem/ruby/${ruby_vers}/bin:${PATH}"
 [[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
 [[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
+[[ -d "${HOME}/Library/Python/3.7/bin" ]] && PATH="${HOME}/Library/Python/3.7/bin:${PATH}"
 export PATH
 unset texlive_year texlive_arch
 
