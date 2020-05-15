@@ -28,8 +28,10 @@ PATH="${PATH/:${HOME}\/bin/}"
 texlive_year="2012"
 texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
-#ruby_vers="1.9.1"
-#PATH="${PATH/:${HOME}\/.gem\/ruby\/${ruby_vers}\/bin/}"
+if which ruby >/dev/null && which gem >/dev/null; then
+    gem_userdir="$(ruby -r rubygems -e 'puts Gem.user_dir')"
+    PATH="${PATH/:${gem_userdir}\/bin/}"
+fi
 PATH="${PATH/:${HOME}\/.node\/bin/}"
 PATH="${PATH/:${HOME}\/Library\/Python\/3.7\/bin/}"
 PATH="${PATH/#:/}"
@@ -38,8 +40,8 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
 [[ -d "/usr/local/texlive/${texlive_year}/bin/${texlive_arch}" ]] &&
     PATH="/usr/local/texlive/${texlive_year}/bin/${texlive_arch}:${PATH}"
-#[[ -d "${HOME}/.gem/ruby/${ruby_vers}/bin" ]] &&
-#    PATH="${HOME}/.gem/ruby/${ruby_vers}/bin:${PATH}"
+[[ -n "${gem_userdir}" && -d "${gem_userdir}" ]] &&
+    PATH="${gem_userdir}/bin:${PATH}"
 [[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
 [[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
 [[ -d "${HOME}/Library/Python/3.7/bin" ]] && PATH="${HOME}/Library/Python/3.7/bin:${PATH}"
