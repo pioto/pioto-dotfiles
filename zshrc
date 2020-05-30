@@ -60,12 +60,14 @@ PS1="%B%F{${host_fg_color}}%K{${host_bg_color}}%n@%m%k%f%b %D{%F %T} "$'\n'" (%?
 
 # Change the window title of X terminals
 case ${TERM} in
-        xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix)
-                PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
-                ;;
-        screen*)
-                PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
-                ;;
+    xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix)
+        precmd_term_title() { echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007" }
+        precmd_functions+=( precmd_term_title )
+        ;;
+    screen*)
+        precmd_term_title() { echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\" }
+        precmd_functions+=( precmd_term_title )
+        ;;
 esac
 
 [[ "${TERM}" == "rxvt-unicode-256color" ]] && export TERM="rxvt-unicode"
