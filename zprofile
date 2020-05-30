@@ -16,8 +16,8 @@ if [[ -x "$(whence -p keychain)" ]] ; then
     unset ssh gpg
 fi
 
-for v in ${!SSH*} ${!DISPLAY*} ; do
-    echo "export $v=\"${!v}\""
+for v in $(typeset +m 'SSH*' 'DISPLAY*') ; do
+    typeset +p "${v}"
 done > "${HOME}/.ssh_env"
 
 [[ -f "${HOME}/.zprofile.local" ]] && source "${HOME}/.zprofile.local"
