@@ -112,8 +112,9 @@ root_bg_color="41"
 # Shell Prompt magic
 
 #export PS1='\[\e[01;${host_fg_color}${host_bg_color}m\]\u@\h\[\e[0m\] \D{%F} \t\n ($?) \[\e[01;34m\]\w\[\e[0m\]$(current_scm_info) \[\e[01;34m\]\$\[\e[0m\] '
-# TODO port this monstrosity over to zsh
-PS1='%m%# '
+# TODO dynamic host coloring
+# TODO scm info
+PS1="%B%F{yellow}%n@%m%f%b %D{%F %T} "$'\n'" (%?) %B%F{blue}%~ %#%f%b "
 
 # Change the window title of X terminals
 case ${TERM} in
