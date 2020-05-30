@@ -98,23 +98,19 @@ current_scm_info() {
 }
 
 # default prompt coloring
-host_fg_color="33"
-host_bg_color=""
-root_bg_color="41"
+host_fg_color="yellow"
+host_bg_color="default"
+root_bg_color="red"
 # color prompts differently for different hosts
-# TODO port this to zsh
-#[[ -f "${HOME}/.bash_colors" ]] && source "${HOME}/.bash_colors"
+[[ -f "${HOME}/.zsh_colors" ]] && source "${HOME}/.zsh_colors"
 
 [[ "${EUID}" -eq 0 ]] && host_bg_color="${root_bg_color}"
-
-[[ -n "${host_bg_color}" ]] && host_bg_color=";${host_bg_color}"
 
 # Shell Prompt magic
 
 #export PS1='\[\e[01;${host_fg_color}${host_bg_color}m\]\u@\h\[\e[0m\] \D{%F} \t\n ($?) \[\e[01;34m\]\w\[\e[0m\]$(current_scm_info) \[\e[01;34m\]\$\[\e[0m\] '
-# TODO dynamic host coloring
 # TODO scm info
-PS1="%B%F{yellow}%n@%m%f%b %D{%F %T} "$'\n'" (%?) %B%F{blue}%~ %#%f%b "
+PS1="%B%F{${host_fg_color}}%K{${host_bg_color}}%n@%m%k%f%b %D{%F %T} "$'\n'" (%?) %B%F{blue}%~ %#%f%b "
 
 # Change the window title of X terminals
 case ${TERM} in
