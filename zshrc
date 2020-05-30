@@ -36,67 +36,6 @@ setopt HIST_REDUCE_BLANKS
 [[ -f "${HOME}/.inputrc" ]] && \
     export INPUTRC="${HOME}/.inputrc"
 
-# fun stuff from ferdy
-current_git_branch() {
-    # don't let gnu git mess stuff up
-    git --version 1>/dev/null 2>&1 || return
-
-    local result=$(git symbolic-ref HEAD 2>/dev/null)
-
-    [[ -z ${result} ]] || echo " (${result##refs/heads/})"
-}
-
-current_cvs_repo() {
-    local result tag
-
-    if [[ -f CVS/Repository ]] ; then
-        result="$(< CVS/Repository)"
-        if [[ -f CVS/Tag ]] ; then
-            tag=" $(sed s/^.// CVS/Tag)"
-        fi
-        echo " (CVS: ${result%%/*}${tag})"
-    fi
-}
-
-current_svn_rev() {
-    local result
-
-    if [[ -d .svn ]] ; then
-        result=$(svn info | sed -n -e '/^Revision: \([0-9]*\).*$/s//\1/p')
-        echo " (SVN: r${result})"
-    fi
-}
-
-_git_branch_status() {
-    local result="${1}"
-    [[ -n "${result}" ]] || return
-
-    local desc="$(git describe 2>/dev/null)"
-    [[ -n "${desc}" ]] && result="${result%)}@${desc})"
-
-    local status="$(git branch -v 2>/dev/null |perl -ne '/^\*/ or next; /(\[(?:ahead|behind)[^\]]+\])/; print $1')"
-    [[ -n "${status}" ]] && result="${result%)} ${status})"
-
-    echo "${result}"
-}
-
-current_scm_info() {
-    local mygitinfo="$(__git_ps1 2>/dev/null || current_git_branch)" # from the git bash_completion script
-    mygitinfo="$(_git_branch_status "${mygitinfo}")"
-    local mycvsinfo="$(current_cvs_repo)"
-    local mysvninfo="$(current_svn_rev)"
-
-    if [[ -n ${mygitinfo} ]] ; then
-        echo "${mygitinfo}"
-    elif [[ -n ${mycvsinfo} ]] ; then
-        echo "${mycvsinfo}"
-    elif [[ -n ${mysvninfo} ]] ; then
-        echo "${mysvninfo}"
-    else
-        echo ""
-    fi
-}
-
 # default prompt coloring
 host_fg_color="yellow"
 host_bg_color="default"
@@ -106,11 +45,18 @@ root_bg_color="red"
 
 [[ "${EUID}" -eq 0 ]] && host_bg_color="${root_bg_color}"
 
-# Shell Prompt magic
+# Shell Prompt
 
-#export PS1='\[\e[01;${host_fg_color}${host_bg_color}m\]\u@\h\[\e[0m\] \D{%F} \t\n ($?) \[\e[01;34m\]\w\[\e[0m\]$(current_scm_info) \[\e[01;34m\]\$\[\e[0m\] '
-# TODO scm info
-PS1="%B%F{${host_fg_color}}%K{${host_bg_color}}%n@%m%k%f%b %D{%F %T} "$'\n'" (%?) %B%F{blue}%~ %#%f%b "
+# include scm info in my prompt, courtesy of
+#   https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%f(%b) %F{blue}'
+zstyle ':vcs_info:*' enable git
+
+PS1="%B%F{${host_fg_color}}%K{${host_bg_color}}%n@%m%k%f%b %D{%F %T} "$'\n'" (%?) %B%F{blue}%~ %b\${vcs_info_msg_0_}%B%#%f%b "
 
 # Change the window title of X terminals
 case ${TERM} in
