@@ -28,7 +28,7 @@ PATH="${PATH/:${HOME}\/bin/}"
 texlive_year="2012"
 texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
-if which ruby >/dev/null && which gem >/dev/null; then
+if which ruby >/dev/null 2>&1 && which gem >/dev/null 2>&1; then
     gem_userdir="$(ruby -r rubygems -e 'puts Gem.user_dir')"
     PATH="${PATH/:${gem_userdir}\/bin/}"
 fi
