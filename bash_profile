@@ -1,3 +1,9 @@
+ZSH="$(type -P zsh)"
+if [[ -n "${ZSH}" && -x "${ZSH}" ]] ; then
+    export SHELL="${ZSH}"
+    exec "${ZSH}" -l
+fi
+
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 if [[ -x "$(type -P keychain)" ]] ; then
