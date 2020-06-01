@@ -16,7 +16,7 @@ if [[ -x "$(whence -p keychain)" ]] ; then
     unset ssh gpg
 fi
 
-for v in $(typeset +m 'SSH*' 'DISPLAY*') ; do
+for v in $(typeset +m 'SSH*' 'DISPLAY*' | sed 's/^exported //') ; do
     typeset +p "${v}"
 done > "${HOME}/.ssh_env"
 
