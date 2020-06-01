@@ -15,6 +15,7 @@ diff:
 	diff $(DIFFOPTS) $(HOME)/.bashrc bashrc || true
 	diff $(DIFFOPTS) $(HOME)/.bash_profile bash_profile || true
 	diff $(DIFFOPTS) $(HOME)/.zshrc zshrc || true
+	diff $(DIFFOPTS) $(HOME)/.zshenv zshenv || true
 	diff $(DIFFOPTS) $(HOME)/.zprofile zprofile || true
 	diff $(DIFFOPTS) $(HOME)/.vimrc vimrc || true
 	diff $(DIFFOPTS) $(HOME)/.inputrc inputrc || true
