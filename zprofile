@@ -1,5 +1,9 @@
 # zsh ~/.zprofile file
 
+if [[ -r /etc/zprofile ]] ; then
+    . /etc/zprofile
+fi
+
 if [[ -x "$(whence -p keychain)" ]] ; then
     ssh="$(cd ${HOME}/.ssh 2>/dev/null && command ls id_*.pub 2>/dev/null|sed s/.pub//)"
     #[[ -d "${HOME}/.gnupg" && -x "$(whence -p gpg)" ]] \
