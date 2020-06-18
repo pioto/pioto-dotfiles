@@ -131,8 +131,8 @@ done
 unset m2
 
 # make Eclipse use native SSH
-if [[ -x "$(type -P ssh)" ]] ; then
-    export GIT_SSH="$(type -P ssh)"
+if [[ -x "$(whence -p ssh)" ]] ; then
+    export GIT_SSH="$(whence -p ssh)"
     export SVN_SSH="${GIT_SSH} -q"
 fi
 
