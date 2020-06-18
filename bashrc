@@ -298,6 +298,7 @@ function pen_lookup() {
 unset hostname
 
 [[ -f "${HOME}/perl5/perlbrew/etc/bashrc" ]] && source "${HOME}/perl5/perlbrew/etc/bashrc"
+
 :
 
 # vim: set ft=sh :
