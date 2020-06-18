@@ -3,6 +3,10 @@
 # series of blog posts:
 #   https://scriptingosx.com/2019/06/moving-to-zsh/
 
+if [[ -r /etc/zshrc ]] ; then
+    . /etc/zshrc
+fi
+
 # Lines configured by zsh-newuser-install
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 HISTSIZE=5000
@@ -15,6 +19,12 @@ zstyle :compinstall filename '/home/pioto/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
+# Additional shell completion stuff
+autoload bashcompinit && bashcompinit
+if [[ -x "$(whence -p aws_completer)" ]] ; then
+    complete -C aws_completer aws
+fi
 
 # additional history config and zsh option tuning
 
@@ -74,7 +84,7 @@ esac
 
 # some os-specific aliases and such
 case "$(uname -s)" in
-    FreeBSD)
+    FreeBSD|Darwin)
         alias ls='ls -GF'
         [[ "${TERM}" == "rxvt-unicode" ]] && export TERM="rxvt"
         ;;
@@ -98,6 +108,10 @@ export PALUDIS_OPTIONS="--continue-on-failure if-satisfied --resume-command-temp
 export RECONCILIO_OPTIONS="${PALUDIS_OPTIONS}"
 
 alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
+
+function pen_lookup() {
+    curl -s https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers | grep -A3 "^${1}$"
+}
 
 [[ -x "$(whence -p hub)" ]] && eval "$(hub alias -s)"
 

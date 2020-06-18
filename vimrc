@@ -21,10 +21,21 @@ if isdirectory(expand("~/.vim/bundle/Vundle.vim/")) && v:version > 700
     " other useful stuff
     Plugin 'ciaranm/securemodelines'
 
-    Plugin 'pangloss/vim-javascript'
-    
     Plugin 'plasticboy/vim-markdown'
     Plugin 'PProvost/vim-markdown-jekyll'
+
+    Plugin 'pangloss/vim-javascript'
+
+    Plugin 'jamessan/vim-gnupg'
+
+    Plugin 'rodjek/vim-puppet'
+
+    Plugin 'tfnico/vim-gradle'
+
+    Plugin 'scottdware/vim-slax'
+    Plugin 'ClockworkNet/vim-junos-syntax'
+    Plugin 'zainin/vim-mikrotik'
+    Plugin 'drools.vim'
 
     " All of your Plugins must be added before the following line
     call vundle#end()         " required

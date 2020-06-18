@@ -1,5 +1,9 @@
 # Mike Kelly's .bashrc
 
+if [ -r /etc/bashrc ] ; then
+    . /etc/bashrc
+fi
+
 # Locality type stuff
 export TZ="America/New_York"
 if [[ -x "$(type -P locale)" ]] ; then
@@ -17,22 +21,30 @@ if [[ -x "$(type -P locale)" ]] ; then
     [[ -n "${LANG}" ]] && export LANG SUPPORTED="${LANG}:en_US:en"
 fi
 
+export GOPATH="${HOME}/gopath"
+
 # properly reorder path... this is icky
 PATH=":${PATH}"
 PATH="${PATH/:\/usr\/local\/bin/}"
 PATH="${PATH/:\/usr\/local\/sbin/}"
 PATH="${PATH/:\/usr\/sbin/}"
 PATH="${PATH/:\/sbin/}"
-PATH="${PATH/:\/usr\/local\/scripts}"
+PATH="${PATH/:\/usr\/local\/scripts/}"
 PATH="${PATH/:${HOME}\/bin/}"
 texlive_year="2012"
 texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
+PATH="${PATH/:${HOME}\/.local\/lib\/npm\/bin/}"
+PATH="${PATH/:\/opt\/local\/bin/}"
+PATH="${PATH/:\/opt\/local\/sbin/}"
 if which ruby >/dev/null 2>&1 && which gem >/dev/null 2>&1; then
     gem_userdir="$(ruby -r rubygems -e 'puts Gem.user_dir')"
     PATH="${PATH/:${gem_userdir}\/bin/}"
 fi
 PATH="${PATH/:${HOME}\/.node\/bin/}"
+PATH="${PATH/:${HOME}\/.rvm\/bin/}"
+PATH="${PATH/:${GOPATH}/}"
+PATH="${PATH/:\/opt\/local\/Library\/Frameworks\/Python.framework\/Versions\/2.7\/bin}"
 PATH="${PATH/:${HOME}\/Library\/Python\/3.7\/bin/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
@@ -40,10 +52,18 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
 [[ -d "/usr/local/texlive/${texlive_year}/bin/${texlive_arch}" ]] &&
     PATH="/usr/local/texlive/${texlive_year}/bin/${texlive_arch}:${PATH}"
+[[ -d "${HOME}/.local/lib/npm/bin" ]] &&
+    PATH="${HOME}/.local/lib/npm/bin:${PATH}"
+for d in /opt/local/{s,}bin ; do
+    [[ -d "$d" ]] &&
+        PATH="${d}:${PATH}"
+done
 [[ -n "${gem_userdir}" && -d "${gem_userdir}" ]] &&
     PATH="${gem_userdir}/bin:${PATH}"
-[[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
 [[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
+[[ -d "${HOME}/.rvm/bin" ]] && PATH="${PATH}:${HOME}/.rvm/bin"
+[[ -d "${GOPATH}" ]] && PATH="${GOPATH}:${GOPATH}/bin:${PATH}"
+[[ -d "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin" ]] && PATH="${PATH}:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin"
 [[ -d "${HOME}/Library/Python/3.7/bin" ]] && PATH="${HOME}/Library/Python/3.7/bin:${PATH}"
 export PATH
 unset texlive_year texlive_arch
@@ -71,7 +91,8 @@ fi
 [[ -d "${HOME}/.node/lib/node_modules" ]] && export NODE_PATH="${HOME}/.node/lib/node_modules"
 
 # set up preferred apps
-export EDITOR="$(type -P vim)"
+[[ -x "$(type -P vim)" ]] && export EDITOR="$(type -P vim)"
+[[ -z "$EDITOR" || ! -x "$EDITOR" && -x "$(type -P vi)" ]] && export EDITOR="$(type -P vi)"
 [[ -z "${BROWSER}" && -x "$(type -P browser)" ]] \
     && export BROWSER="$(type -P browser)"
 [[ -z "${BROWSER}" && -x "$(type -P chrome)" ]] \
@@ -86,11 +107,43 @@ export EDITOR="$(type -P vim)"
     && export BROWSER="$(type -P links)"
 
 export PAGER="less"
+export LESS="-R"
 
-export GPG_TTY="$(tty)"
+exportGPG_TTY="$(tty)"
 
 [[ -x "$(type -P gnome-ssh-askpass)" ]] \
     && export SSH_ASKPASS="$(type -P gnome-ssh-askpass)"
+
+# Mac OS Java Magic
+[[ -x /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+
+# Gradle
+[[ -x /opt/local/share/java/gradle ]] && export GRADLE_HOME="/opt/local/share/java/gradle"
+
+# Maven
+for m2 in /opt/local/share/java/maven3 ; do
+    if [[ -n "${m2}" && -d "${m2}" && -x "${m2}/bin/mvn" ]] ; then
+        export M2_HOME="${m2}"
+        break
+    fi
+done
+unset m2
+
+# make Eclipse use native SSH
+if [[ -x "$(type -P ssh)" ]] ; then
+    export GIT_SSH="$(type -P ssh)"
+    export SVN_SSH="${GIT_SSH} -q"
+fi
+
+# Mac OS environment variable handling MADNESS...
+if [[ "$(uname -s)" == "Darwin" && -x "/bin/launchctl" ]] ; then
+    for k in GIT_SSH SVN_SSH M2_HOME JAVA_HOME GRADLE_HOME PATH ; do
+        /bin/launchctl setenv "$k" "${!k}"
+    done
+fi
+
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # everything else is just for interactive shells.
 [[ $- != *i* ]] && return
@@ -105,6 +158,8 @@ hostname="`hostname -f 2>/dev/null`"
 export HISTFILESIZE=5000 HISTSIZE=5000 HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 shopt -s histappend
 
+shopt -s extglob
+
 [[ -f /usr/local/etc/bash_completion && -z "${BASH_COMPLETION}" ]] && \
     . /usr/local/etc/bash_completion
 [[ -f  /usr/local/share/bash-completion/bash_completion.sh && -z "${BASH_COMPLETION}" ]] && \
@@ -113,6 +168,9 @@ shopt -s histappend
     . /etc/bash_completion
 [[ -f /etc/profile.d/bash-completion && -z "${BASH_COMPLETION}" ]] && \
     source /etc/profile.d/bash-completion
+if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+    . /opt/local/etc/profile.d/bash_completion.sh
+fi
 
 # fun stuff from ferdy
 current_git_branch() {
@@ -149,7 +207,7 @@ _git_branch_status() {
     local result="${1}"
     [[ -n "${result}" ]] || return
     
-    local desc="$(git describe 2>/dev/null)"
+    local desc="$(git describe --tags --always 2>/dev/null)"
     [[ -n "${desc}" ]] && result="${result%)}@${desc})"
 
     local status="$(git branch -v 2>/dev/null |perl -ne '/^\*/ or next; /(\[(?:ahead|behind)[^\]]+\])/; print $1')"
@@ -190,7 +248,7 @@ export PS1='\[\e[01;${host_fg_color}${host_bg_color}m\]\u@\h\[\e[0m\] \D{%F} \t\
 
 # Change the window title of X terminals
 case ${TERM} in
-        xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix)
+        xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix|vt100)
                 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007"'
                 ;;
         screen*)
@@ -200,9 +258,11 @@ esac
 
 [[ "${TERM}" == "rxvt-unicode-256color" ]] && export TERM="rxvt-unicode"
 
+[[ -n "${TMUX}" && "${TERM}" == "screen" ]] && export TERM="xterm-256color"
+
 # some os-specific aliases and such
 case "$(uname -s)" in
-    FreeBSD)
+    FreeBSD|Darwin)
         alias ls='ls -GF'
         [[ "${TERM}" == "rxvt-unicode" ]] && export TERM="rxvt"
         ;;
@@ -227,6 +287,10 @@ export RECONCILIO_OPTIONS="${PALUDIS_OPTIONS}"
 
 alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
 
+function pen_lookup() {
+    curl -s https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers | grep -A3 "^${1}$"
+}
+
 [[ -x "$(type -P hub)" ]] && eval "$(hub alias -s)"
 
 [[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
@@ -234,5 +298,6 @@ alias cr="sudo cave resume --resume-file ${HOME}/cave-resume"
 unset hostname
 
 [[ -f "${HOME}/perl5/perlbrew/etc/bashrc" ]] && source "${HOME}/perl5/perlbrew/etc/bashrc"
+:
 
 # vim: set ft=sh :

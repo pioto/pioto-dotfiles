@@ -18,22 +18,30 @@ if [[ -x "$(whence -p locale)" ]] ; then
     [[ -n "${LANG}" ]] && export LANG SUPPORTED="${LANG}:en_US:en"
 fi
 
+export GOPATH="${HOME}/gopath"
+
 # properly reorder path... this is icky
 PATH=":${PATH}"
 PATH="${PATH/:\/usr\/local\/bin/}"
 PATH="${PATH/:\/usr\/local\/sbin/}"
 PATH="${PATH/:\/usr\/sbin/}"
 PATH="${PATH/:\/sbin/}"
-PATH="${PATH/:\/usr\/local\/scripts}"
+PATH="${PATH/:\/usr\/local\/scripts/}"
 PATH="${PATH/:${HOME}\/bin/}"
 texlive_year="2012"
 texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
+PATH="${PATH/:${HOME}\/.local\/lib\/npm\/bin/}"
+PATH="${PATH/:\/opt\/local\/bin/}"
+PATH="${PATH/:\/opt\/local\/sbin/}"
 if which ruby >/dev/null 2>&1 && which gem >/dev/null 2>&1; then
     gem_userdir="$(ruby -r rubygems -e 'puts Gem.user_dir')"
     PATH="${PATH/:${gem_userdir}\/bin/}"
 fi
 PATH="${PATH/:${HOME}\/.node\/bin/}"
+PATH="${PATH/:${HOME}\/.rvm\/bin/}"
+PATH="${PATH/:${GOPATH}/}"
+PATH="${PATH/:\/opt\/local\/Library\/Frameworks\/Python.framework\/Versions\/2.7\/bin}"
 PATH="${PATH/:${HOME}\/Library\/Python\/3.7\/bin/}"
 PATH="${PATH/#:/}"
 PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
@@ -41,10 +49,22 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
 [[ -d "${HOME}/bin" ]] && PATH="${HOME}/bin:${PATH}"
 [[ -d "/usr/local/texlive/${texlive_year}/bin/${texlive_arch}" ]] &&
     PATH="/usr/local/texlive/${texlive_year}/bin/${texlive_arch}:${PATH}"
+[[ -d "${HOME}/.local/lib/npm/bin" ]] &&
+    PATH="${HOME}/.local/lib/npm/bin:${PATH}"
+for d in /opt/local/{s,}bin ; do
+    [[ -d "$d" ]] &&
+        PATH="${d}:${PATH}"
+done
 [[ -n "${gem_userdir}" && -d "${gem_userdir}" ]] &&
     PATH="${gem_userdir}/bin:${PATH}"
-[[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
 [[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
+[[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
+[[ -d "${HOME}/.local/lib/npm/bin" ]] &&
+    PATH="${HOME}/.local/lib/npm/bin:${PATH}"
+for d in /opt/local/{s,}bin ; do
+    [[ -d "$d" ]] &&
+        PATH="${d}:${PATH}"
+done
 [[ -d "${HOME}/Library/Python/3.7/bin" ]] && PATH="${HOME}/Library/Python/3.7/bin:${PATH}"
 export PATH
 unset texlive_year texlive_arch
