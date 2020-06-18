@@ -92,7 +92,8 @@ fi
 [[ -d "${HOME}/.node/lib/node_modules" ]] && export NODE_PATH="${HOME}/.node/lib/node_modules"
 
 # set up preferred apps
-export EDITOR="$(whence -p vim)"
+[[ -x "$(whence -p vim)" ]] && export EDITOR="$(whence -p vim)"
+[[ -z "$EDITOR" || ! -x "$EDITOR" && -x "$(whence -p vi)" ]] && export EDITOR="$(whence -p vi)"
 [[ -z "${BROWSER}" && -x "$(whence -p browser)" ]] \
     && export BROWSER="$(whence -p browser)"
 [[ -z "${BROWSER}" && -x "$(whence -p chrome)" ]] \
@@ -107,10 +108,38 @@ export EDITOR="$(whence -p vim)"
     && export BROWSER="$(whence -p links)"
 
 export PAGER="less"
+export LESS="-R"
 
 export GPG_TTY="$(tty)"
 
 [[ -x "$(whence -p gnome-ssh-askpass)" ]] \
     && export SSH_ASKPASS="$(whence -p gnome-ssh-askpass)"
 
+# Mac OS Java Magic
+[[ -x /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
+
+# Gradle
+[[ -x /opt/local/share/java/gradle ]] && export GRADLE_HOME="/opt/local/share/java/gradle"
+
+# Maven
+for m2 in /opt/local/share/java/maven3 ; do
+    if [[ -n "${m2}" && -d "${m2}" && -x "${m2}/bin/mvn" ]] ; then
+        export M2_HOME="${m2}"
+        break
+    fi
+done
+unset m2
+
+# make Eclipse use native SSH
+if [[ -x "$(type -P ssh)" ]] ; then
+    export GIT_SSH="$(type -P ssh)"
+    export SVN_SSH="${GIT_SSH} -q"
+fi
+
+# Mac OS environment variable handling MADNESS...
+if [[ "$(uname -s)" == "Darwin" && -x "/bin/launchctl" ]] ; then
+    for k in GIT_SSH SVN_SSH M2_HOME JAVA_HOME GRADLE_HOME PATH ; do
+        /bin/launchctl setenv "$k" "${!k}"
+    done
+fi
 

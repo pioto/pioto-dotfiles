@@ -70,7 +70,7 @@ PS1="%B%F{${host_fg_color}}%K{${host_bg_color}}%n@%m%k%f%b %D{%F %T} "$'\n'" (%?
 
 # Change the window title of X terminals
 case ${TERM} in
-    xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix)
+    xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix|vt100)
         precmd_term_title() { echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007" }
         precmd_functions+=( precmd_term_title )
         ;;
@@ -81,6 +81,8 @@ case ${TERM} in
 esac
 
 [[ "${TERM}" == "rxvt-unicode-256color" ]] && export TERM="rxvt-unicode"
+
+[[ -n "${TMUX}" && "${TERM}" == "screen" ]] && export TERM="xterm-256color"
 
 # some os-specific aliases and such
 case "$(uname -s)" in

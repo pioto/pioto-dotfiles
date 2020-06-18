@@ -109,7 +109,7 @@ fi
 export PAGER="less"
 export LESS="-R"
 
-exportGPG_TTY="$(tty)"
+export GPG_TTY="$(tty)"
 
 [[ -x "$(type -P gnome-ssh-askpass)" ]] \
     && export SSH_ASKPASS="$(type -P gnome-ssh-askpass)"
