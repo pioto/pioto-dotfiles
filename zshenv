@@ -139,7 +139,7 @@ fi
 # Mac OS environment variable handling MADNESS...
 if [[ "$(uname -s)" == "Darwin" && -x "/bin/launchctl" ]] ; then
     for k in GIT_SSH SVN_SSH M2_HOME JAVA_HOME GRADLE_HOME PATH ; do
-        /bin/launchctl setenv "$k" "${!k}"
+        /bin/launchctl setenv "$k" "${(P)k}"
     done
 fi
 
