@@ -1,7 +1,7 @@
 ZSH="$(type -P zsh)"
 if [[ -n "${ZSH}" && -x "${ZSH}" ]] ; then
     export SHELL="${ZSH}"
-    exec "${ZSH}" -l
+    exec -l "${ZSH}"
 fi
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
