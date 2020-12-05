@@ -1,5 +1,13 @@
 # Mike Kelly's .bashrc
 
+if [[ "$-" == *i* ]] ; then
+    ZSH="$(type -P zsh)"
+    if [[ -n "${ZSH}" && -x "${ZSH}" ]] ; then
+        export SHELL="${ZSH}"
+        exec "${ZSH}"
+    fi
+fi
+
 if [ -r /etc/bashrc ] ; then
     . /etc/bashrc
 fi
