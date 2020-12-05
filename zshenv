@@ -40,6 +40,7 @@ if which ruby >/dev/null 2>&1 && which gem >/dev/null 2>&1; then
 fi
 PATH="${PATH/:${HOME}\/.node\/bin/}"
 PATH="${PATH/:${HOME}\/.rvm\/bin/}"
+PATH="${PATH/:${HOME}\/.pyenv\/bin/}"
 PATH="${PATH/:${GOPATH}/}"
 PATH="${PATH/:\/opt\/local\/Library\/Frameworks\/Python.framework\/Versions\/2.7\/bin}"
 PATH="${PATH/:${HOME}\/Library\/Python\/3.7\/bin/}"
@@ -59,6 +60,7 @@ done
     PATH="${gem_userdir}/bin:${PATH}"
 [[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
 [[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
+[[ -d "${HOME}/.pyenv/bin" ]] && PATH="${HOME}/.pyenv/bin:${PATH}"
 [[ -d "${HOME}/.local/lib/npm/bin" ]] &&
     PATH="${HOME}/.local/lib/npm/bin:${PATH}"
 for d in /opt/local/{s,}bin ; do

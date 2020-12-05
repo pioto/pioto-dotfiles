@@ -28,6 +28,11 @@ done > "${HOME}/.ssh_env"
 
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# Load pyenv, too
+if [[ -d "${HOME}/.pyenv/bin" && -x "$(whence -p pyenv)" ]] ; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 :
 
