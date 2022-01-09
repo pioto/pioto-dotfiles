@@ -21,9 +21,12 @@ compinit
 # End of lines added by compinstall
 
 # Additional shell completion stuff
-autoload bashcompinit && bashcompinit
+autoload -U +X bashcompinit && bashcompinit
 if [[ -x "$(whence -p aws_completer)" ]] ; then
     complete -C aws_completer aws
+fi
+if [[ -x "/usr/bin/terraform" ]] ; then
+    complete -o nospace -C /usr/bin/terraform terraform
 fi
 
 # additional history config and zsh option tuning
@@ -120,6 +123,12 @@ function pen_lookup() {
 [[ -f "${HOME}/.zshrc.local" ]] && source "${HOME}/.zshrc.local"
 
 [[ -f "${HOME}/perl5/perlbrew/etc/zshrc" ]] && source "${HOME}/perl5/perlbrew/etc/zshrc"
+
+if [[ -d "$HOME/.nvm" ]] ; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
 
 :
 
