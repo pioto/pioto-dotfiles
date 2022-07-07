@@ -10,11 +10,11 @@ if [[ -x "$(whence -p keychain)" ]] ; then
     #	&& gpg="$(gpg --list-secret-keys |sed -n '/^sec/s/.*\d*[DR]\/\([0-9A-F]*\).*/\1/p')"
     if [[ -n "${ssh}${gpg}" ]] ; then
         keychain ${ssh} ${gpg}
-        if [[ -f "${HOME}/.keychain/${HOSTNAME}-sh" ]] ; then
-            . "${HOME}/.keychain/${HOSTNAME}-sh"
+        if [[ -f "${HOME}/.keychain/${HOST}-sh" ]] ; then
+            . "${HOME}/.keychain/${HOST}-sh"
         fi
-        if [[ -f "${HOME}/.keychain/${HOSTNAME}-sh-gpg" ]] ; then
-            . "${HOME}/.keychain/${HOSTNAME}-sh-gpg"
+        if [[ -f "${HOME}/.keychain/${HOST}-sh-gpg" ]] ; then
+            . "${HOME}/.keychain/${HOST}-sh-gpg"
         fi
     fi
     unset ssh gpg

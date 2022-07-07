@@ -74,11 +74,11 @@ PS1="%B%F{${host_fg_color}}%K{${host_bg_color}}%n@%m%k%f%b %D{%F %T} "$'\n'" (%?
 # Change the window title of X terminals
 case ${TERM} in
     xterm*|rxvt*|Eterm|aterm|kterm|gnome*|interix|vt100)
-        precmd_term_title() { echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\007" }
+        precmd_term_title() { echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD/$HOME/~}\007" }
         precmd_functions+=( precmd_term_title )
         ;;
     screen*)
-        precmd_term_title() { echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\" }
+        precmd_term_title() { echo -ne "\033_${USER}@${HOST%%.*}:${PWD/$HOME/~}\033\\" }
         precmd_functions+=( precmd_term_title )
         ;;
 esac
