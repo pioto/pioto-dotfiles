@@ -32,6 +32,7 @@ texlive_year="2012"
 texlive_arch="$(echo `uname -m`-`uname -s`|tr '[A-Z]' '[a-z]')"
 PATH="${PATH/:\/usr\/local\/texlive\/${texlive_year}\/bin\/${texlive_arch}/}"
 PATH="${PATH/:${HOME}\/.local\/lib\/npm\/bin/}"
+PATH="${PATH/:${HOME}\/.local\/bin/}"
 PATH="${PATH/:\/opt\/local\/bin/}"
 PATH="${PATH/:\/opt\/local\/sbin/}"
 if which ruby >/dev/null 2>&1 && which gem >/dev/null 2>&1; then
@@ -52,6 +53,8 @@ PATH="/sbin:/usr/local/sbin:/usr/sbin:/usr/local/bin:${PATH}"
     PATH="/usr/local/texlive/${texlive_year}/bin/${texlive_arch}:${PATH}"
 [[ -d "${HOME}/.local/lib/npm/bin" ]] &&
     PATH="${HOME}/.local/lib/npm/bin:${PATH}"
+[[ -d "${HOME}/.local/bin" ]] &&
+    PATH="${HOME}/.local/bin:${PATH}"
 for d in /opt/local/{s,}bin ; do
     [[ -d "$d" ]] &&
         PATH="${d}:${PATH}"
@@ -61,8 +64,6 @@ done
 [[ -d "${HOME}/.node/bin" ]] && PATH="${HOME}/.node/bin:${PATH}"
 [[ -d "$HOME/.rvm/bin" ]] && PATH="$PATH:$HOME/.rvm/bin"
 [[ -d "${HOME}/.pyenv/bin" ]] && PATH="${HOME}/.pyenv/bin:${PATH}"
-[[ -d "${HOME}/.local/lib/npm/bin" ]] &&
-    PATH="${HOME}/.local/lib/npm/bin:${PATH}"
 for d in /opt/local/{s,}bin ; do
     [[ -d "$d" ]] &&
         PATH="${d}:${PATH}"
