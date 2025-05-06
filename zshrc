@@ -130,6 +130,18 @@ if [[ -d "$HOME/.nvm" ]] ; then
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
+if [[ -d "${HOME}/.asdf" && -x "$(whence -p asdf)" ]] ; then
+    export ASDF_DATA_DIR="${HOME}/.asdf"
+    export PATH="$ASDF_DATA_DIR/shims:$PATH"
+
+    mkdir -p "${ASDF_DATA_DIR}/completions"
+    asdf completion zsh > "${ASDF_DATA_DIR:-$HOME/.asdf}/completions/_asdf"
+
+    # append completions to fpath
+    fpath=(${ASDF_DIR}/completions $fpath)
+    # initialise completions with ZSH's compinit
+    autoload -Uz compinit && compinit
+fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
